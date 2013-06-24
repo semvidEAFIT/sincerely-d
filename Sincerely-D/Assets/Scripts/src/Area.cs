@@ -3,13 +3,11 @@ using System.Collections;
 
 public class Area : Node {
 	
-	public Node[] nodes; 
-	// Use this for initialization
-	void Start () {
-		foreach(Node n in nodes){
-			n.AddObserver(this);
+	public override void Start(){
+		base.Start();
+		foreach(Node n in focus){
 			AddObserver(n);
-		}
+		}	
 	}
 	
 	public override void Refresh(Node target){

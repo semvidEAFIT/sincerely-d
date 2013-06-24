@@ -12,12 +12,21 @@ public abstract class Node: MonoBehaviour {
 		}
 	}
 	
+	public Node[] focus; 
+	// Use this for initialization
+	public virtual void Start () {
+		foreach(Node n in focus){
+			n.AddObserver(this);
+		}
+	}
+	
     private bool changed = false;
 
     void Awake() {
         observers = new List<Node>();
     }
-
+	
+	//TODO mantener areas en lista diferente
     public void AddObserver(Node observer) {
         observers.Add(observer);
     }
