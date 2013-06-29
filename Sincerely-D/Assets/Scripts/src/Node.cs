@@ -22,7 +22,16 @@ public abstract class Node: MonoBehaviour {
 	
     private bool changed = false;
 
-    void Awake() {
+	protected bool Changed {
+		get {
+			return this.changed;
+		}
+		set {
+			changed = value;
+		}
+	}
+	
+    public virtual void Awake() {
         observers = new List<Node>();
     }
 	
@@ -39,11 +48,11 @@ public abstract class Node: MonoBehaviour {
         return changed;
     }
 
-    protected void RefreshAllObservers() {
-        if(IsChanged()){
+    protected void NotifyAllObservers(Event e) {
+        if(Changed){
             changed = false;
             foreach (Node observer in observers) {
-                observer.Refresh(this);
+                observer.Notify(this, e);
             }
         }
     }
@@ -52,9 +61,9 @@ public abstract class Node: MonoBehaviour {
         observers.Remove(observer);
 	}
 	
-	public void RefreshObserver(Node observer){
-		observer.Refresh(this);
+	public void NotifyObserver(Node observer, Event e){
+		observer.Notify(this, e);
 	}
 	
-	public abstract void Refresh(Node node);
+	public abstract void Notify(Node node, Event e);
 }

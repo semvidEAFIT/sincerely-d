@@ -3,6 +3,16 @@ using System.Collections;
 
 public abstract class State{
 	
-	public abstract void Refresh(Character body, Node target);
-
+	protected Character body;
+	protected Mind mind;
+	
+	public State(Character body, Mind mind){
+		this.body = body;
+		this.mind = mind;
+	}
+	
+	public abstract void Notify(Node target, Event e);
+	public abstract void Update();
+	public abstract void Leave();
+	public abstract void Start();
 }

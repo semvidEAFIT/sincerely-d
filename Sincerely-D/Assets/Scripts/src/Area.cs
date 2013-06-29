@@ -10,10 +10,10 @@ public class Area : Node {
 		}	
 	}
 	
-	public override void Refresh(Node target){
+	public override void Notify(Node target, Event e){
 		foreach(Node n in Observers){
 			if(!n.Equals(target)){
-				n.Refresh(target);	
+				n.Notify(target, e);	
 			}
 		}
 	}
