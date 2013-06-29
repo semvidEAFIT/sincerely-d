@@ -1,41 +1,26 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent (typeof (CharacterController))]
 [RequireComponent (typeof (Mind))]
 public abstract class Character : MonoBehaviour {
 	
+	public Corner startingDirection;
 	protected CharacterController characterController;
 	protected Mind mind;
 	
 	void Awake(){
-		characterController = GetComponent<CharacterController>();
+		if(startingDirection == null){
+			throw new Exception("No starting direction");
+		}
+		characterController = GetComponent<CharacterController>();	
 		mind = GetComponent<Mind>();
 	}
 	
-	#region Movement
-	private Vector3 finalPos, movement;
-	public float speed;
-	private bool moving;
-	
 	public void Move(Vector3 position){
-		finalPos = position;
-		moving = true;
+				
 	}
-	
-	public virtual void Update(){
-		if(moving){
-			if(transform.position != finalPos){
-				movement = (finalPos - transform.position).normalized * speed;
-				characterController.Move(movement * Time.deltaTime);
-			}else{
-				finalPos = Vector3.zero;
-				movement = Vector3.zero;
-				moving = false;
-			}
-		}
-	}
-	#endregion
 	
 	public abstract State GetDefaultState();
 }
